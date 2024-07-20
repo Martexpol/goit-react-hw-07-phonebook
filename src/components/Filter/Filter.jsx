@@ -1,6 +1,6 @@
 import styles from "./Filter.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { setFilter } from "../../redux/actions";
+import { setFilter } from "../../redux/slices";
 
 export default function Filter() {
   const dispatch = useDispatch();

@@ -2,25 +2,24 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./Phonebook.module.scss";
 import { nanoid } from "nanoid";
-import { addContact } from "../../redux/actions";
+import { addContact } from "../../redux/operations";
 
 export default function Phonebook() {
   const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
+  const [phone, setPhone] = useState("");
   const dispatch = useDispatch();
-  const contacts = useSelector((state) => state.contacts);
+  const contacts = useSelector((state) => state.contacts.contacts);
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
     const newContact = {
       id: nanoid(),
       name,
-      number,
+      phone,
     };
     const contactExists = contacts.some(
       (contact) =>
-        contact.name === newContact.name ||
-        contact.number === newContact.number,
+        contact.name === newContact.name || contact.phone === newContact.phone,
     );
     if (contactExists) {
       window.alert(`${newContact.name} is already in contacts`);
@@ -28,7 +27,7 @@ export default function Phonebook() {
     }
     dispatch(addContact(newContact));
     setName("");
-    setNumber("");
+    setPhone("");
   };
 
   const nameId = nanoid();
@@ -57,12 +56,12 @@ export default function Phonebook() {
           id={numId}
           className={styles.input}
           type="tel"
-          name="number"
+          name="phone"
           pattern="^\+?[1-9]\d{1,14}$"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
-          value={number}
-          onChange={(ev) => setNumber(ev.target.value)}
+          value={phone}
+          onChange={(ev) => setPhone(ev.target.value)}
         />
         <button type="submit" className={styles.btn}>
           Add contact
